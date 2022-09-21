@@ -11,10 +11,10 @@ public class Game extends JFrame implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private Player player = new Player(50, 50, 180);
-	private Ghost ghost1 = new Ghost(0,0,0);
-	private Ghost ghost2 = new Ghost(500,0,0);
-	private Ghost ghost3 = new Ghost(0,500,0);
-	private Ghost ghost4 = new Ghost(500,500,0);
+	private Ghost ghost1 = new Ghost(0,0,10);
+	private Ghost ghost2 = new Ghost(500,0,10);
+	private Ghost ghost3 = new Ghost(0,500,10);
+	private Ghost ghost4 = new Ghost(500,500,10);
 	private Bomb bomb = new Bomb(100,100);
 	private Booster booster = new Booster(400, 400);
 
@@ -28,6 +28,11 @@ public class Game extends JFrame implements KeyListener {
 
 	private final int SCREENSIZE = 600;
 	private int speed = 50;
+
+	boolean cima;
+	boolean direita;
+	boolean esquerda; 
+	boolean baixo;  
 	
 	public static void main(String[] args) {
 		new Game().init();
@@ -85,7 +90,22 @@ public class Game extends JFrame implements KeyListener {
 	private void run() {
 		while (player.getLife() > 0) {
 			
-			//coloque aqui os métodos de movimentação e colisão 
+			if(cima == true){
+				player.mover();
+			}   
+			if(esquerda == true){
+				player.mover();
+			}  
+			if(baixo == true){
+				player.mover();
+			}  
+			if(direita == true){
+				player.mover();
+			}           
+			
+			if(player.colisao(ghost1) || player.colisao(ghost2) || player.colisao(ghost3) || player.colisao(ghost4)){        //coloque aqui os métodos de movimentação e colisão 
+				System.out.println("Perdeu uma vida"+System.currentTimeMillis());
+			}                                                                      
 			
 			try {
 				Thread.sleep(speed);
@@ -107,10 +127,23 @@ public class Game extends JFrame implements KeyListener {
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {}
+	public void keyPressed(KeyEvent e) {
+	char c = e.getKeyChar();
+	if (c == '8' || c == 'w') cima = true; 	
+	if (c == '6' || c == 'd') direita = true;
+	if (c == '2' || c == 's') baixo = true;	
+	if (c == '4' || c == 'a') esquerda = true;	
+	}
+
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+	char c = e.getKeyChar();
+	if (c == '8' || c == 'w') cima = false; 	
+	if (c == '6' || c == 'd') direita = false;
+	if (c == '2' || c == 's') baixo = false;	
+	if (c == '4' || c == 'a') esquerda = false;	
+	}
 	
 
 	
