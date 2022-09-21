@@ -52,7 +52,7 @@ public class GameObject {
     }
 
     public boolean colisao(GameObject obj){
-        if(getX() >= obj.getX() && getX() <= obj.getX() + obj.getScreenSize() && getY() >= obj.getY() && getY() <= obj.getY() + obj.getScreenSize()){
+        if(getX() >= obj.getX() && getX() <= obj.getX() + 50 && getY() >= obj.getY() && getY() <= obj.getY() + 50){
             return true;
         }
         return false;

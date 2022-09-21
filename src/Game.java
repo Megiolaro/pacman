@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 public class Game extends JFrame implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
-	private Player player = new Player(50, 50, 180);
+	private Player player = new Player(275, 275, 180);
 	private Ghost ghost1 = new Ghost(0,0,10);
 	private Ghost ghost2 = new Ghost(500,0,10);
 	private Ghost ghost3 = new Ghost(0,500,10);
@@ -105,7 +105,10 @@ public class Game extends JFrame implements KeyListener {
 			
 			if(player.colisao(ghost1) || player.colisao(ghost2) || player.colisao(ghost3) || player.colisao(ghost4)){        //coloque aqui os métodos de movimentação e colisão 
 				System.out.println("Perdeu uma vida"+System.currentTimeMillis());
-			}                                                                      
+				player.setLife(player.getLife() - 1);
+				resetarPosicao();
+			}        
+			
 			
 			try {
 				Thread.sleep(speed);
@@ -145,7 +148,22 @@ public class Game extends JFrame implements KeyListener {
 	if (c == '4' || c == 'a') esquerda = false;	
 	}
 	
-
+	private void resetarPosicao() {
+		player.setX(275);
+		player.setY(275);
+		ghost1.setX(0);
+		ghost1.setY(0);
+		ghost2.setX(500);
+		ghost2.setY(0);
+		ghost3.setX(0);
+		ghost3.setY(500);
+		ghost4.setX(500);
+		ghost4.setY(500);
+		bomb.setX(100);
+		bomb.setY(100);
+		booster.setX(400);
+		booster.setY(400);
+	}
 	
 }  
 
