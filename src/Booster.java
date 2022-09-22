@@ -1,14 +1,14 @@
 public class Booster extends Item {
-    private int turno = 10;
-   
-    public Booster(int x, int y) {
-        super(x, y,100); //FIXME: Mudar tamanhoTela
+    private int turno;
+    
+    public Booster(int x, int y, int turno) {
+        super(x, y,100); 
 
-        this.turno = 10; //FIXME: Definir turno
-        
+
+        this.turno = turno;
     }
 
-    public int getTurno() {
+	public int getTurno() {
         return turno;
     }
 
@@ -16,6 +16,6 @@ public class Booster extends Item {
         this.turno = turno;
     }
 
-    
+  
 
 }

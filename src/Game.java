@@ -11,12 +11,12 @@ public class Game extends JFrame implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private Player player = new Player(275, 275, 180);
-	private Ghost ghost1 = new Ghost(0,0,10);
+	private Ghost ghost1 = new Ghost(10,10,10);
 	private Ghost ghost2 = new Ghost(500,0,10);
 	private Ghost ghost3 = new Ghost(0,500,10);
 	private Ghost ghost4 = new Ghost(500,500,10);
 	private Bomb bomb = new Bomb(100,100);
-	private Booster booster = new Booster(400, 400);
+	private Booster booster = new Booster(400, 400,(int)(Math.random()*100)+45);
 
 	private JLabel imgPlayer = new JLabel(new ImageIcon("src/images/pacman.png"));
 	private JLabel imgGhost1 = new JLabel(new ImageIcon("src/images/ghost.png"));
@@ -76,6 +76,7 @@ public class Game extends JFrame implements KeyListener {
 		updateLocation(imgBooster, booster);
 		setTitle("Life: " + player.getLife());
 		SwingUtilities.updateComponentTreeUI(this);
+		
 
 	}
 
@@ -85,6 +86,7 @@ public class Game extends JFrame implements KeyListener {
         Image img = myImage.getImage();
         Image newImg = img.getScaledInstance(label.getWidth(), label.getHeight(),Image.SCALE_SMOOTH);
         label.setIcon( new ImageIcon(newImg) );
+        label.setVisible(object.isVisivel());
 	}
 
 	private void run() {
@@ -103,12 +105,33 @@ public class Game extends JFrame implements KeyListener {
 				player.mover();
 			}           
 			
-			if(player.colisao(ghost1) || player.colisao(ghost2) || player.colisao(ghost3) || player.colisao(ghost4)){        //coloque aqui os métodos de movimentação e colisão 
+			if(player.colisao(ghost1) || player.colisao(ghost2) || player.colisao(ghost3) || player.colisao(ghost4) || player.colisao(bomb)) {        //coloque aqui os métodos de movimentação e colisão 
 				System.out.println("Perdeu uma vida"+System.currentTimeMillis());
-				player.setLife(player.getLife() - 1);
-				resetarPosicao();
+				Dano();
+				
 			}        
+			if(player.colisao(booster) && booster.isVisivel()) {
+				System.out.println("Booster");
+				player.setInvencivel(true);
+				booster.setVisivel(false);
+			}
+			ghost1.Movimentacao();
+			ghost2.Movimentacao();
+			ghost3.Movimentacao();
+			ghost4.Movimentacao();
 			
+			
+			if(!booster.isVisivel()) {
+				booster.setTurno(booster.getTurno() - 1);
+				if(booster.getTurno() == 0) {
+					booster.setVisivel(true);
+					player.setInvencivel(false);
+					booster.setTurno((int)(Math.random()*100)+45);
+					
+				}
+				
+				
+			}
 			
 			try {
 				Thread.sleep(speed);
@@ -118,7 +141,10 @@ public class Game extends JFrame implements KeyListener {
 			render();
 			
 		}
+		
+		
 	}
+
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -163,6 +189,15 @@ public class Game extends JFrame implements KeyListener {
 		bomb.setY(100);
 		booster.setX(400);
 		booster.setY(400);
+	}
+	
+	private void Dano() {
+		if(!player.isInvencivel()) {
+			player.setLife(player.getLife() - 1);
+			resetarPosicao();
+		}
+	
+			
 	}
 	
 }  

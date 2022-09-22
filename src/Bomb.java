@@ -4,5 +4,6 @@ public class Bomb extends Item{
         super(posicaoX, posicaoY, 180); //FIXME: Definir tamanhoTela
         //TODO Auto-generated constructor stub
     }
+ 
     
 }
